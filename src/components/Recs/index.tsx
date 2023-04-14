@@ -1,4 +1,11 @@
-import { Button, Heading, Text, VStack, Skeleton, Center } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  Text,
+  VStack,
+  Skeleton,
+  Center,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import ReplyForm from "../ReplyForm";
 import { ReplyType } from "../../types";
@@ -32,31 +39,36 @@ const Recs: React.FC<IRecsProps> = ({ recBrief, recNumber }) => {
         REQUEST # {recNumber}
       </Heading>
       <Text>"{recBrief}"</Text>
+      <VStack w="40%">
+        {replies.map((rep, index) => {
+          return (
+            <Skeleton
+              isLoaded={index + 1 < replies.length ? true : !loading}
+              w="100%"
+              key={index}
+            >
+              <Center w="100%" borderRadius="10px">
+                <Reply
+                  repBrief={rep.brief}
+                  repNumber={index + 1}
+                  link={rep.link}
+                />
+              </Center>
+            </Skeleton>
+          );
+        })}
+      </VStack>
       {giveARec ? (
-        <ReplyForm toggle={() => toggle(!giveARec)} addRep={addRep}/>
+        <ReplyForm toggle={() => toggle(!giveARec)} addRep={addRep} />
       ) : (
-        <>
-          <VStack w="40%">
-            {replies.map((rep, index) => {
-              return (
-                <Skeleton isLoaded={index + 1 < replies.length ? true : !loading} w="100%">
-    
-                <Center key={index} w="100%" borderRadius='10px'>
-                  <Reply repBrief={rep.brief} repNumber={index + 1} link={rep.link}/>
-                </Center>
-                </Skeleton>
-              );
-            })}
-          </VStack>
         <Button
           size="lg"
           variant="outline"
           colorScheme="teal"
           onClick={() => toggle(!giveARec)}
-          >
+        >
           VIEW/REPLY
         </Button>
-          </>
       )}
     </VStack>
   );
