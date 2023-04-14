@@ -22,7 +22,7 @@ const RepliesList: React.FC<IRepliesListProps> = ({ replies, loading }) => {
               <Reply
                 repBrief={rep.brief}
                 repNumber={index + 1}
-                link={rep.link}
+                link={rep.link.replace("watch?v=", "embed/")}
               />
             </Center>
           </Skeleton>
