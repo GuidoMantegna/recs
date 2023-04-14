@@ -3,7 +3,7 @@ export type AskRecsType = {
     brief: string;
   };
 
-export type RecsType = {
+export type ReplyType = {
     id: string;
     link: string;
     brief: string;

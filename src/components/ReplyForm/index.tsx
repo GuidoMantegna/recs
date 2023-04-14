@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./styles.scss";
-import { RecsType } from "../../types";
+import { ReplyType } from "../../types";
 import {
   Text,
   Textarea,
@@ -12,24 +12,24 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-interface IRecsFormProps {
-  addRec: (rec: RecsType) => void;
+interface IReplyFormProps {
+  addRep: (rec: ReplyType) => void;
   toggle: () => void;
 }
 
-const RecsForm: React.FC <IRecsFormProps> = (
+const ReplyForm: React.FC <IReplyFormProps> = (
   {
     toggle,
-    addRec
+    addRep
   }
 ) => {
-  const [rec, setRec] = useState<RecsType>({ id: "", link: "", brief: "" });
+  const [reply, setReply] = useState<ReplyType>({ id: "", link: "", brief: "" });
   return (
     <form
-      className="RecsForm"
+      className="ReplyForm"
       onSubmit={(e) => {
         e.preventDefault();
-        addRec(rec);
+        addRep(reply);
         toggle()
         // closeModal();
       }}
@@ -44,20 +44,20 @@ const RecsForm: React.FC <IRecsFormProps> = (
           name="YouTubeLink"
           placeholder="YouTube"
           onChange={(e) =>
-            setRec({ ...rec, link: e.target.value, id: e.target.value })
+            setReply({ ...reply, link: e.target.value, id: e.target.value })
           }
         />
       </FormControl>
       <FormControl isRequired mb="15px">
-        <FormLabel htmlFor="recBrief" textAlign="center">
+        <FormLabel htmlFor="repBrief" textAlign="center">
           Explain why you are recommending this movie
         </FormLabel>
         <Textarea
-          id="recBrief"
-          name="recBrief"
+          id="repBrief"
+          name="repBrief"
           placeholder="You should watch this movie because..."
           onChange={(e) =>
-            setRec({ ...rec, brief: e.target.value })
+            setReply({ ...reply, brief: e.target.value })
           }
         />
       </FormControl>
@@ -74,4 +74,4 @@ const RecsForm: React.FC <IRecsFormProps> = (
   );
 };
 
-export default RecsForm;
+export default ReplyForm;

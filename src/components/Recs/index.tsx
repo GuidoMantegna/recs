@@ -1,7 +1,7 @@
 import { Button, Heading, Text, VStack, Skeleton, Center } from "@chakra-ui/react";
 import React, { useState } from "react";
-import RecsForm from "../RecsForm";
-import { RecsType } from "../../types";
+import ReplyForm from "../ReplyForm";
+import { ReplyType } from "../../types";
 import Reply from "../Reply";
 
 interface IRecsProps {
@@ -11,11 +11,11 @@ interface IRecsProps {
 
 const Recs: React.FC<IRecsProps> = ({ recBrief, recNumber }) => {
   const [giveARec, toggle] = useState<boolean>(false);
-  const [recs, addRecs] = useState<RecsType[]>([]);
+  const [replies, addReplies] = useState<ReplyType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const addRec = (rec: RecsType) => {
+  const addRep = (rec: ReplyType) => {
     setLoading(true);
-    addRecs([...recs, rec]);
+    addReplies([...replies, rec]);
     setTimeout(() => setLoading(false), 1500);
   };
   return (
@@ -33,16 +33,16 @@ const Recs: React.FC<IRecsProps> = ({ recBrief, recNumber }) => {
       </Heading>
       <Text>"{recBrief}"</Text>
       {giveARec ? (
-        <RecsForm toggle={() => toggle(!giveARec)} addRec={addRec}/>
+        <ReplyForm toggle={() => toggle(!giveARec)} addRep={addRep}/>
       ) : (
         <>
           <VStack w="40%">
-            {recs.map((rec, index) => {
+            {replies.map((rep, index) => {
               return (
-                <Skeleton isLoaded={index + 1 < recs.length ? true : !loading} w="100%">
+                <Skeleton isLoaded={index + 1 < replies.length ? true : !loading} w="100%">
     
                 <Center key={index} w="100%" borderRadius='10px'>
-                  <Reply recBrief={rec.brief} recNumber={index + 1} link={rec.link}/>
+                  <Reply repBrief={rep.brief} repNumber={index + 1} link={rep.link}/>
                 </Center>
                 </Skeleton>
               );

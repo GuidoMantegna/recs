@@ -11,7 +11,6 @@ import {
   ModalCloseButton,
   ModalContent,
   Center,
-  Divider,
   Skeleton,
 } from "@chakra-ui/react";
 import { ColorModeSwitcher, Recs, AskRecsForm } from "./components";
