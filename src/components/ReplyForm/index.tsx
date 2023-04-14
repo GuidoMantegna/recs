@@ -10,6 +10,7 @@ import {
   FormHelperText,
   Button,
   Input,
+  HStack,
 } from "@chakra-ui/react";
 
 interface IReplyFormProps {
@@ -17,20 +18,19 @@ interface IReplyFormProps {
   toggle: () => void;
 }
 
-const ReplyForm: React.FC <IReplyFormProps> = (
-  {
-    toggle,
-    addRep
-  }
-) => {
-  const [reply, setReply] = useState<ReplyType>({ id: "", link: "", brief: "" });
+const ReplyForm: React.FC<IReplyFormProps> = ({ toggle, addRep }) => {
+  const [reply, setReply] = useState<ReplyType>({
+    id: "",
+    link: "",
+    brief: "",
+  });
   return (
     <form
       className="ReplyForm"
       onSubmit={(e) => {
         e.preventDefault();
         addRep(reply);
-        toggle()
+        toggle();
         // closeModal();
       }}
     >
@@ -56,20 +56,30 @@ const ReplyForm: React.FC <IReplyFormProps> = (
           id="repBrief"
           name="repBrief"
           placeholder="You should watch this movie because..."
-          onChange={(e) =>
-            setReply({ ...reply, brief: e.target.value })
-          }
+          onChange={(e) => setReply({ ...reply, brief: e.target.value })}
         />
       </FormControl>
-      <Button
-        type="submit"
-        size="md"
-        variant="outline"
-        colorScheme="teal"
-        minW="120px"
-      >
-        REPLY
-      </Button>
+      <HStack>
+        <Button
+          type="button"
+          size="md"
+          variant="outline"
+          colorScheme="yellow"
+          minW="120px"
+          onClick={() => toggle()}
+        >
+          CANCEL
+        </Button>
+        <Button
+          type="submit"
+          size="md"
+          variant="outline"
+          colorScheme="teal"
+          minW="120px"
+        >
+          REPLY
+        </Button>
+      </HStack>
     </form>
   );
 };

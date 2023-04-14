@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import ReplyForm from "../ReplyForm";
 import { ReplyType } from "../../types";
 import Reply from "../Reply";
+import RepliesList from "../RepliesList";
 
 interface IRecsProps {
   recNumber: number;
@@ -18,6 +19,7 @@ interface IRecsProps {
 
 const Recs: React.FC<IRecsProps> = ({ recBrief, recNumber }) => {
   const [giveARec, toggle] = useState<boolean>(false);
+  const [wrapReplies, toggleWrapper] = useState<boolean>(false);
   const [replies, addReplies] = useState<ReplyType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const addRep = (rec: ReplyType) => {
@@ -39,36 +41,24 @@ const Recs: React.FC<IRecsProps> = ({ recBrief, recNumber }) => {
         REQUEST # {recNumber}
       </Heading>
       <Text>"{recBrief}"</Text>
-      <VStack w="40%">
-        {replies.map((rep, index) => {
-          return (
-            <Skeleton
-              isLoaded={index + 1 < replies.length ? true : !loading}
-              w="100%"
-              key={index}
-            >
-              <Center w="100%" borderRadius="10px">
-                <Reply
-                  repBrief={rep.brief}
-                  repNumber={index + 1}
-                  link={rep.link}
-                />
-              </Center>
-            </Skeleton>
-          );
-        })}
-      </VStack>
+      <Button variant='ghost' colorScheme="twitter" onClick={() => toggleWrapper(!wrapReplies)}>{wrapReplies ? 'hide replies 🙈' : 'show replies 🐵'}</Button>
       {giveARec ? (
-        <ReplyForm toggle={() => toggle(!giveARec)} addRep={addRep} />
+        <>
+          <RepliesList replies={replies} loading={loading} />
+          <ReplyForm toggle={() => toggle(!giveARec)} addRep={addRep} />
+        </>
       ) : (
-        <Button
-          size="lg"
-          variant="outline"
-          colorScheme="teal"
-          onClick={() => toggle(!giveARec)}
-        >
-          VIEW/REPLY
-        </Button>
+        <>
+          {wrapReplies && <RepliesList replies={replies} loading={loading} />}
+          <Button
+            size="lg"
+            variant="outline"
+            colorScheme="teal"
+            onClick={() => toggle(!giveARec)}
+          >
+            VIEW/REPLY
+          </Button>
+        </>
       )}
     </VStack>
   );
